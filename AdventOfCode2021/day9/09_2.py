@@ -27,7 +27,7 @@ def bfs(coordinates: List[List[int]], start_i: int, start_j: int) -> List[Tuple[
     queue.append((start_i, start_j))
 
     while len(queue) > 0:
-        current_x, current_y = queue.pop()
+        current_x, current_y = queue.pop(0)
 
         for offset_x, offset_y in offsets:
             target_x = current_x + offset_x
