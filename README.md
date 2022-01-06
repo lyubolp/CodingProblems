@@ -11,4 +11,5 @@ Adding solutions to some coding problems from. Trying to commit daily.
 - Python
 - Haskell
 - C++
+- Rust
 
