@@ -8,8 +8,10 @@ Adding solutions to some coding problems from. Trying to commit daily.
 
 ## Languages used:
 
-- Python
-- Haskell
-- C++
-- Rust
+| Language: | Problems solved: |
+| --------- | ---------------- |
+| Python    | 155              |
+| Haskell   | 13               |
+| C++       | 3                |
+| Rust      | 2                |
 
