@@ -1,5 +1,5 @@
 # Coding problems
-Adding solutions to some coding problems from. Trying to commit daily. 
+Adding solutions to some coding problems from various sources. Trying to commit daily. 
 
 ## Sources:
 
