@@ -1,6 +1,7 @@
 #!/bin/bash
 
-mkdir $1 && cd $1;
+echo $1 $2;
+mkdir "$1" && cd "$1";
 
 touch $2;
 vim $2;
