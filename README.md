@@ -15,7 +15,3 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 | Bash | 1 |
 | Rust | 4 |
 | **Total:** | 309 |
-    |
-| Rust      | 4                |
-| **Total** | 301              |
-
