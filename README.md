@@ -7,12 +7,15 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 - [Advent Of Code 2021](https://adventofcode.com/)
 
 ## Languages used:
-
 | Language: | Problems solved: |
 | --------- | ---------------- |
-| Python    | 270              |
-| Haskell   | 14               |
-| C++       | 13               |
+| Haskell | 14 |
+| Python | 277 |
+| C++ | 13 |
+| Bash | 1 |
+| Rust | 4 |
+| **Total:** | 309 |
+    |
 | Rust      | 4                |
 | **Total** | 301              |
 
