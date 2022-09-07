@@ -52,7 +52,6 @@ if __name__ == "__main__":
         line = fp.readline()
 
         while line != '## Languages used:\n':
-            print(line)
             line = fp.readline()
         
         fp.seek(fp.tell())
