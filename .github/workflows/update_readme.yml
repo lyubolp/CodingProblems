@@ -29,3 +29,5 @@ jobs:
 
       - name: Add, commit and push
         uses: maxgfr/github-commit-push-file@main
+        with:
+          commit_name: 'Automatically updated README'
