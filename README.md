@@ -10,8 +10,8 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 | Language: | Problems solved: |
 | --------- | ---------------- |
 | Haskell | 14 |
-| Python | 279 |
+| Python | 280 |
 | C++ | 13 |
 | Bash | 1 |
 | Rust | 4 |
-| **Total:** | 311 |
+| **Total:** | 312 |
