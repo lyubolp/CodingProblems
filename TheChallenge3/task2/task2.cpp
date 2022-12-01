@@ -3,11 +3,13 @@
 #include <stack>
 #include <vector>
 #include <map>
+#include <queue>
+#include <unordered_set>
 
 typedef std::vector<std::vector<int>> graph;
-typedef std::map<int, int> isomorphic_f;
+typedef std::vector<int> isomorphic_f;
 
-graph initialize_new(const int size) {
+graph initialize_new(const int size) { //O(N)
     graph result;
     
     for (int i = 0; i <= size; i++) {
@@ -19,9 +21,9 @@ graph initialize_new(const int size) {
 }
 
 graph handle_input(const int n) {
-    graph result = initialize_new(n);
+    graph result = initialize_new(n); //O(N)
 
-    for (int current_point = 1; current_point < n; current_point++) {
+    for (int current_point = 1; current_point < n; current_point++) { //O(N^2)
         int amount_of_points = 0;
         std::cin >> amount_of_points;
 
@@ -45,27 +47,27 @@ void display_graph(const graph& board) {
     }
 }
 
-graph map_graph(const graph& graph_to_be_mapped, const isomorphic_f& mapping) {
-    graph mapped_graph = initialize_new(graph_to_be_mapped.size() - 1);
+graph map_graph(const graph& graph_to_be_mapped, const isomorphic_f& mapping) { //O(N^2)
+    graph mapped_graph = initialize_new(graph_to_be_mapped.size() - 1); //O(N)
 
-    for (int old_index = 1; old_index < graph_to_be_mapped.size(); old_index++) {
-        int new_index = mapping.find(old_index)->second;
+    for (int old_index = 1; old_index < graph_to_be_mapped.size(); old_index++) { //O(N^2)
+        int new_index = mapping[old_index-1];
 
         for (auto old_neighbour: graph_to_be_mapped[old_index]) {
-            mapped_graph[new_index].push_back(mapping.find(old_neighbour)->second);
+            mapped_graph[new_index].push_back(mapping[old_neighbour-1]);
         }
     }
 
     return mapped_graph;
 }
 
-bool are_graphs_isomorphic(const graph& mapped_graph1, const graph& graph2) {
+bool are_graphs_isomorphic(const graph& mapped_graph1, const graph& graph2) { //O(N^2)
     for (int i = 1; i < mapped_graph1.size(); i++) {
         if (mapped_graph1[i].size() != graph2[i].size()) {
             return false;
         }
 
-        for (int j = 0; j < mapped_graph1[i].size(); j++) {
+        for (int j = 0; j < graph2[i].size(); j++) {
             if (mapped_graph1[i][j] != graph2[i][j]) {
                 return false;
             }
@@ -75,86 +77,122 @@ bool are_graphs_isomorphic(const graph& mapped_graph1, const graph& graph2) {
     return true;
 }
 
-isomorphic_f get_next_isomorphic_mapping(const isomorphic_f& mapping) { 
-
-    std::vector<int> current_mapping;
-    for (auto it: mapping) {
-        current_mapping.push_back(it.second);
+void display_isomorphic_mapping_result(const isomorphic_f& mapping, int n) { 
+    for (int i = 1; i < n; i++) {
+        std::cout << mapping[i-1] << " ";
     }
+    std::cout << mapping[n-1];
+}
 
-    std::next_permutation(current_mapping.begin(), current_mapping.end());
+graph generate_possible_mappings(const graph& first, const graph& second, const std::map<int, int>& levels_graph1, const std::map<int, int>& levels_graph2) {
+    int n = first.size();
+    graph result = initialize_new(n);
 
-    isomorphic_f result;
+    result[1].push_back(1);
+    result[n].push_back(n);
 
-    for(int i = 1; i <= current_mapping.size(); i++) { 
-        result.insert({i, current_mapping[i-1]});
+    for (int i = 2; i < n; i++) {
+        for(int j = 2; j < n; j++) {
+            if (first[i].size() == second[j].size() && levels_graph1.find(i)->second == levels_graph2.find(j)->second) {
+                result[i].push_back(j);
+            }
+        }
     }
 
     return result;
 }
 
-void display_isomorphic_mapping(const isomorphic_f& mapping) {
-    for(auto it: mapping) {
-        std::cout << "{" << it.first << ", " << it.second << "}" << std::endl;
-    }
-}
+isomorphic_f find_mapping(const graph& mappings, const graph& graph_1, const graph& graph_2) {
+    std::stack<std::pair<std::vector<int>, std::unordered_set<int>>> stack;
+    std::unordered_set<std::string> visited;
 
-void display_isomorphic_mapping_result(const isomorphic_f& mapping, int n) { 
-    for (int i = 1; i < n; i++) {
-        std::cout << mapping.find(i)->second << " ";
-    }
-    std::cout << mapping.find(n)->second;
-}
-
-isomorphic_f dfs(const graph& graph_1, const graph& graph_2, const int n, bool is_showing_debug_info = false) {
-    isomorphic_f first_mapping;
-
-    for (int i = 1; i <= n; i++) {
-        first_mapping.insert({i, i});
-    }
-
-
-    std::stack<isomorphic_f> stack;
-    stack.emplace(first_mapping);
+    stack.push({{1}, {1}});
 
     while (!stack.empty()) {
-        isomorphic_f current_mapping = stack.top();
-
+        std::pair<std::vector<int>, std::unordered_set<int>> item = stack.top();
+        
+        std::vector<int> current_mapping = item.first;
+        std::unordered_set<int> current_mapping_set = item.second;
 
         stack.pop();
 
-        graph mapped_graph = map_graph(graph_1, current_mapping);
-        
-        
-        if (are_graphs_isomorphic(mapped_graph, graph_2)) {
-            return current_mapping;
+        if (current_mapping.size() == mappings.size() - 1) {
+            std::string str_version="";
+
+            for (auto item: current_mapping) {
+                str_version += (std::to_string(item) + ",");
+            }
+
+            auto search = visited.find(str_version);
+
+            if (search == visited.end()) {
+                graph mapped_graph = map_graph(graph_1, current_mapping);
+
+                if (are_graphs_isomorphic(mapped_graph, graph_2)) {
+                    return current_mapping;
+                }
+                visited.insert(str_version);
+            }
         }
-        else {
-            stack.emplace(get_next_isomorphic_mapping(current_mapping));
-        }
 
-        if (is_showing_debug_info) {
-            std::cout << "--start--\n";
-            
-            std::cout << "Mapping: " << std::endl;
-            display_isomorphic_mapping(current_mapping);
-            std::cout << std::endl;
-            std::cout << "Original graph: " << std::endl;
-            display_graph(graph_1);
+        for(auto item: mappings[current_mapping.size()+1]) {
 
-            std::cout << "Mapped graph: " << std::endl;
-            display_graph(mapped_graph);
+            auto search = current_mapping_set.find(item);
 
-            std::cout << "Target graph: " << std::endl;
-            display_graph(graph_2);
-            
-            std::cout << "--end--\n";
-        
+            if (search == current_mapping_set.end()) {
+                current_mapping.push_back(item);
+                current_mapping_set.insert(item);
+
+                stack.push({current_mapping, current_mapping_set});
+                
+                current_mapping.pop_back();
+                current_mapping_set.erase(item);
+            }   
         }
     }
 
-    return isomorphic_f();
+    isomorphic_f def;
+
+    for(int i = 0; i <= graph_1.size(); i++) {
+        def.push_back(i);
+    }
+    return def;
 }
+
+std::map<int, int> bfs(const graph& graph) {
+    std::queue<std::pair<int, int>> queue;
+    queue.push({1, 0});
+
+    std::unordered_set<int> visited;
+
+    std::map<int, int> result;
+    while (!queue.empty()) {
+        std::pair<int, int> current = queue.front();
+
+        int current_node = current.first;
+        int current_level = current.second;
+        
+        queue.pop();
+
+        if (visited.find(current_node) != visited.end()) {
+            continue;
+        }
+
+        auto finder = result.find(current_node);
+
+        if (finder == result.end()) {
+            result.insert({current_node, current_level});
+        }
+        
+        visited.insert(current_node);
+        for(int neightbour: graph[current_node]) {
+            queue.push({neightbour, current_level + 1});
+        }
+    }
+
+    return result;
+}
+
 int main() {
     int n;
     std::cin >> n;
@@ -162,16 +200,10 @@ int main() {
     graph first = handle_input(n);
     graph second = handle_input(n);
 
-    // std::cout << "First:" << std::endl;
-    // display_graph(first);
-
-    // std::cout << "Second:" << std::endl;
-    // display_graph(second);
-
-
-    isomorphic_f result = dfs(first, second, n, false);
+    graph mappings = generate_possible_mappings(first, second, bfs(first), bfs(second));
+    isomorphic_f result = find_mapping(mappings, first, second);
 
     display_isomorphic_mapping_result(result, n);
-    
+
     return 0;   
 }
