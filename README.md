@@ -9,9 +9,9 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 ## Languages used:
 | Language: | Problems solved: |
 | --------- | ---------------- |
-| Python | 302 |
+| Python | 305 |
+| C++ | 15 |
 | Rust | 4 |
-| C++ | 13 |
 | Bash | 1 |
 | Haskell | 14 |
-| **Total:** | 334 |
+| **Total:** | 339 |
