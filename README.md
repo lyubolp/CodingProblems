@@ -12,9 +12,9 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 ## Languages used:
 | Language: | Problems solved: |
 | --------- | ---------------- |
-| Python | 311 |
+| Python | 313 |
 | C++ | 15 |
 | Rust | 4 |
 | Bash | 1 |
 | Haskell | 14 |
-| **Total:** | 345 |
+| **Total:** | 347 |
