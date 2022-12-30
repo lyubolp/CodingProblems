@@ -13,8 +13,8 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 | Language: | Problems solved: |
 | --------- | ---------------- |
 | C++ | 15 |
-| Python | 329 |
+| Python | 330 |
 | Haskell | 14 |
 | Rust | 4 |
 | Bash | 1 |
-| **Total:** | 363 |
+| **Total:** | 364 |
