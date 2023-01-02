@@ -5,7 +5,8 @@ extensions_to_normal_name = {
         'rs': 'Rust',
         'sh': 'Bash',
         'cpp': 'C++',
-        'hs': 'Haskell'
+        'hs': 'Haskell',
+        'java': 'Java'
 }
 
 def get_extension(filename: str) -> str:
