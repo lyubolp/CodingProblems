@@ -15,7 +15,7 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 | Python | 330 |
 | C++ | 15 |
 | Haskell | 14 |
-| Java | 6 |
+| Java | 7 |
 | Rust | 4 |
 | Bash | 1 |
-| **Total:** | 370 |
+| **Total:** | 371 |
