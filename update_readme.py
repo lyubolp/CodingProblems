@@ -9,11 +9,14 @@ extensions_to_normal_name = {
         'java': 'Java'
 }
 
+
 def get_extension(filename: str) -> str:
     if filename.find('.') == -1:
         return ''
 
     return filename.split('.')[1]
+
+
 def count_extensions(extensions) -> dict:
     result = {}
     for extension in extensions:
@@ -23,6 +26,7 @@ def count_extensions(extensions) -> dict:
             result[extension] = 1
 
     return result
+
 
 def convert_to_markdown(counted_extensions: dict) -> str:
     total = 0
@@ -35,13 +39,14 @@ def convert_to_markdown(counted_extensions: dict) -> str:
         count = counted_extensions[language]
         result += f'| {language} | {count} |\n'
         total += count
-    
+
     result += f'| **Total:** | {total} |\n'
 
     return result
 
+
 if __name__ == "__main__":
-    dirs_to_ignore = ['./.git', '.vscode', './.github']
+    dirs_to_ignore = ['./.git', '.vscode', './.github', 'utils']
     extensions_to_ignore = ['txt', '', 'json', 'xml', 'gitignore', 'md']
     all_files = [files for dirname, subdirs, files in os.walk('.') if not any(dir_pattern in dirname for dir_pattern in dirs_to_ignore)][1:]
 
@@ -52,7 +57,6 @@ if __name__ == "__main__":
 
     counted_extensions = count_extensions(all_code_extensions)
 
-    print(counted_extensions)
     markdown = convert_to_markdown(counted_extensions)
 
     with open('README.md', 'r+') as fp:
@@ -60,6 +64,6 @@ if __name__ == "__main__":
 
         while line != '## Languages used:\n':
             line = fp.readline()
-        
+
         fp.seek(fp.tell())
         fp.write(markdown)
