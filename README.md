@@ -13,10 +13,10 @@ Adding solutions to some coding problems from various sources. Trying to commit 
 ## Languages used:
 | Language: | Problems solved: |
 | --------- | ---------------- |
-| Python | 380 |
+| Python | 382 |
 | C++ | 15 |
 | Haskell | 14 |
 | Java | 10 |
 | Rust | 6 |
 | Bash | 1 |
-| **Total:** | 426 |
+| **Total:** | 428 |
