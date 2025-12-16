@@ -6,11 +6,23 @@ def read_input() -> list[str]:
 
 
 def calculate_joltage(bank: str) -> int:
+    max_digits = 12
+    digits = []
 
-    first_digit, index = max_with_index(bank[:-1])
-    second_digit, _ = max_with_index(bank[index + 1 :])
+    start = 0
+    for digits_taken in range(max_digits):
+        end = max_digits - digits_taken - 1
 
-    return int(first_digit + second_digit)
+        if end == 0:
+            digits.append(max(bank[start:]))
+            # print(max(bank[start:]))
+            continue
+        digit, new_start = max_with_index(bank[start:-end])
+        # print(start, end, bank[start:-end], digit)
+        digits.append(digit)
+        start += new_start + 1
+
+    return int("".join(digits))
 
 
 def max_with_index(bank: str) -> tuple[str, int]:
@@ -30,3 +42,5 @@ if __name__ == "__main__":
     joltages = [calculate_joltage(line) for line in lines]
     print(joltages)
     print(sum(joltages))
+
+    # print(calculate_joltage(lines[1]))
